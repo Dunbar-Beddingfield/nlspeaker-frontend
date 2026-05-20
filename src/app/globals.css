@@ -1,0 +1,163 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Brand colors */
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-amber: var(--brand-amber);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* NL Speaker brand palette — navy & gold */
+  --brand-gold: #F59E0B;
+  --brand-amber: #D97706;
+  --brand-navy: #0F172A;
+
+  /* Dark theme backgrounds */
+  --bg-primary: #0B1120;
+  --bg-secondary: #111827;
+  --bg-card: #1A2540;
+
+  /* Shadcn overrides — navy/gold dark theme */
+  --background: #0B1120;
+  --foreground: #F8FAFC;
+  --card: #111827;
+  --card-foreground: #F8FAFC;
+  --popover: #1A2540;
+  --popover-foreground: #F8FAFC;
+  --primary: #F59E0B;
+  --primary-foreground: #0B1120;
+  --secondary: #1A2540;
+  --secondary-foreground: #F8FAFC;
+  --muted: #1E2D3D;
+  --muted-foreground: #94A3B8;
+  --accent: #D97706;
+  --accent-foreground: #F8FAFC;
+  --destructive: #ef4444;
+  --border: rgba(245, 158, 11, 0.15);
+  --input: rgba(245, 158, 11, 0.08);
+  --ring: #F59E0B;
+  --sidebar: #111827;
+  --sidebar-foreground: #F8FAFC;
+  --sidebar-primary: #F59E0B;
+  --sidebar-primary-foreground: #0B1120;
+  --sidebar-accent: #1A2540;
+  --sidebar-accent-foreground: #F8FAFC;
+  --sidebar-border: rgba(245, 158, 11, 0.12);
+  --sidebar-ring: #F59E0B;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-color: #0B1120;
+  }
+
+  ::selection {
+    background-color: rgba(245, 158, 11, 0.25);
+    color: #F8FAFC;
+  }
+}
+
+@layer utilities {
+  /* Gold gradient — used for CTAs, badges, highlights */
+  .gradient-gold {
+    background: linear-gradient(135deg, #F59E0B, #D97706, #B45309);
+  }
+
+  .gradient-gold-text {
+    background: linear-gradient(135deg, #FBBF24, #F59E0B, #D97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtle gold border glow */
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #F59E0B, #D97706, #92400E);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.35);
+  }
+
+  .glow-gold-sm {
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+  }
+
+  .bg-glass {
+    background: rgba(11, 17, 32, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .text-muted-brand {
+    color: #94A3B8;
+  }
+
+  /* Serif utility for Playfair Display headlines */
+  .font-serif-display {
+    font-family: var(--font-playfair), Georgia, serif;
+  }
+}
