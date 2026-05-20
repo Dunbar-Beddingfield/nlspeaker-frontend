@@ -11,6 +11,24 @@ import { cn } from "@/lib/utils";
 
 type TabType = "booking" | "contact";
 
+const ERROR_MAP: Record<string, string> = {
+  "eventDate must be a valid ISO 8601 date string": "Please enter a valid event date.",
+  "email must be an email": "Please enter a valid email address.",
+  "name must be longer than or equal to 1 characters": "Please enter your full name.",
+  "message must be longer than or equal to 1 characters": "Please enter a message.",
+};
+
+function humaniseApiError(message: string): string {
+  if (!message) return "Something went wrong. Please try again or email us directly.";
+  const mapped = ERROR_MAP[message];
+  if (mapped) return mapped;
+  // Strip technical field prefixes like "fieldName must ..." → "Please check your submission and try again."
+  if (/must be|must have|should be|is not valid/i.test(message)) {
+    return "Please check your submission and try again.";
+  }
+  return message;
+}
+
 export function ContactForm() {
   const searchParams = useSearchParams();
   const defaultService = searchParams.get("service") || "";
@@ -28,6 +46,9 @@ export function ContactForm() {
     const get = (name: string) =>
       (form.elements.namedItem(name) as HTMLInputElement)?.value || "";
 
+    const rawDate = get("eventDate");
+    const eventDate = rawDate ? new Date(rawDate).toISOString() : "";
+
     const payload =
       tab === "booking"
         ? {
@@ -36,7 +57,7 @@ export function ContactForm() {
             email: get("email"),
             phone: get("phone"),
             organization: get("organization"),
-            eventDate: get("eventDate"),
+            eventDate,
             eventType: get("eventType"),
             eventLocation: get("eventLocation"),
             audienceSize: get("audienceSize"),
@@ -56,8 +77,8 @@ export function ContactForm() {
     try {
       await submitInquiry(payload);
       setSubmitted(true);
-    } catch {
-      setError("Something went wrong. Please try again or email us directly.");
+    } catch (e) {
+      setError(humaniseApiError(e instanceof Error ? e.message : ""));
     } finally {
       setLoading(false);
     }
