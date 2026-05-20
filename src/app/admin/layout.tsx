@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -15,10 +15,13 @@ import {
   FileText,
   Settings,
   LogOut,
+  RefreshCw,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import { revalidateCache, CACHE_TAGS } from "@/lib/api";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", Icon: LayoutDashboard, exact: true },
@@ -37,6 +40,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { isAuthenticated, isLoading, logout, user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const [clearing, setClearing] = useState(false);
+
+  async function handleClearCache() {
+    setClearing(true);
+    try {
+      await revalidateCache(...Object.values(CACHE_TAGS));
+      toast.success("Cache cleared successfully");
+    } catch {
+      toast.error("Failed to clear cache");
+    } finally {
+      setClearing(false);
+    }
+  }
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated && pathname !== "/admin/login") {
@@ -82,7 +98,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        <div className="p-3 border-t border-[rgba(245,158,11,0.08)]">
+        <div className="p-3 border-t border-[rgba(245,158,11,0.08)] space-y-0.5">
+          <button
+            onClick={handleClearCache}
+            disabled={clearing}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#64748B] hover:text-[#F59E0B] transition-colors w-full disabled:opacity-50"
+          >
+            <RefreshCw className={cn("w-4 h-4", clearing && "animate-spin")} />
+            {clearing ? "Clearing…" : "Clear Cache"}
+          </button>
           <button
             onClick={logout}
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#64748B] hover:text-red-400 transition-colors w-full"

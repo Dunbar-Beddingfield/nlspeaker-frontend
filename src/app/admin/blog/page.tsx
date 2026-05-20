@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Plus, Pencil, Trash2, ImagePlus, X, Clock } from "lucide-react";
+import RichTextEditor from "@/components/ui/rich-text-editor";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useAuth } from "@/hooks/useAuth";
@@ -124,7 +125,7 @@ export default function AdminBlogPage() {
       )}
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent className="bg-[#111827] border-l border-[rgba(245,158,11,0.12)] overflow-y-auto w-full sm:max-w-xl">
+        <SheetContent className="bg-[#111827] border-l border-[rgba(245,158,11,0.12)] overflow-y-auto w-full sm:max-w-2xl">
           <SheetHeader className="mb-6"><SheetTitle className="text-[#F8FAFC]">{editing ? "Edit Post" : "New Post"}</SheetTitle></SheetHeader>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
@@ -133,8 +134,8 @@ export default function AdminBlogPage() {
             </div>
             <div><label className={labelCls}>Excerpt</label><textarea rows={2} className={`${inputCls} resize-none`} value={form.excerpt} onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))} /></div>
             <div>
-              <label className={labelCls}>Body (HTML)</label>
-              <textarea rows={10} className={`${inputCls} resize-y font-mono text-xs`} value={form.body} onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))} placeholder="<p>Your content here…</p>" />
+              <label className={labelCls}>Body</label>
+              <RichTextEditor value={form.body} onChange={(html) => setForm((f) => ({ ...f, body: html }))} placeholder="Write your post…" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div><label className={labelCls}>Author</label><input className={inputCls} value={form.author} onChange={(e) => setForm((f) => ({ ...f, author: e.target.value }))} /></div>
