@@ -21,6 +21,8 @@ const DEFAULTS: Omit<SiteSettingFull, "_id">[] = [
   { key: "speakerTitle", value: "", label: "Speaker Title / Tagline", type: "text" },
   { key: "speakerPhoto", value: "", label: "Speaker Photo", type: "image" },
   { key: "aboutSummary", value: "", label: "About / Bio Summary", type: "textarea" },
+  { key: "founderPhoto", value: "", label: "Founder Photo (About Page)", type: "image" },
+  { key: "brianCarterPhoto", value: "", label: "Brian Carter Photo (Media Page)", type: "image" },
   { key: "bookingEmail", value: "", label: "Booking Email Address", type: "text" },
   { key: "phone", value: "", label: "Phone Number", type: "text" },
   { key: "linkedinUrl", value: "", label: "LinkedIn URL", type: "url" },
@@ -85,6 +87,8 @@ export default function AdminSettingsPage() {
   const groups: { label: string; keys: string[] }[] = [
     { label: "Homepage Hero", keys: ["heroHeadline", "heroSubheadline", "heroCtaText", "heroImage"] },
     { label: "Speaker Profile", keys: ["speakerName", "speakerTitle", "speakerPhoto", "aboutSummary"] },
+    { label: "Founder (About Page)", keys: ["founderPhoto"] },
+    { label: "Marketing (Media Page)", keys: ["brianCarterPhoto"] },
     { label: "Contact Info", keys: ["bookingEmail", "phone"] },
     { label: "Social Links", keys: ["linkedinUrl", "instagramUrl", "facebookUrl", "youtubeUrl"] },
   ];

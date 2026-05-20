@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   LayoutDashboard,
   Mic,
+  Users,
   BookOpen,
   Calendar,
   Star,
@@ -22,6 +23,7 @@ import { Toaster } from "@/components/ui/sonner";
 const NAV = [
   { href: "/admin", label: "Dashboard", Icon: LayoutDashboard, exact: true },
   { href: "/admin/services", label: "Services", Icon: Mic },
+  { href: "/admin/speakers", label: "Speakers", Icon: Users },
   { href: "/admin/topics", label: "Topics", Icon: BookOpen },
   { href: "/admin/events", label: "Events", Icon: Calendar },
   { href: "/admin/testimonials", label: "Testimonials", Icon: Star },

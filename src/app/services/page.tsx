@@ -23,11 +23,37 @@ export default async function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
-              eyebrow="What We Offer"
-              title="Our Speaking"
-              titleHighlight="Programs"
+              eyebrow="Our Services"
+              title="What We"
+              titleHighlight="Offer"
               description="From high-energy keynotes to transformational workshops, every program is crafted to move your audience and leave a lasting impression."
             />
+          </AnimatedSection>
+
+          {/* Focus + Offer */}
+          <AnimatedSection delay={0.1}>
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="p-8 rounded-2xl bg-[#111827] border border-[rgba(245,158,11,0.08)]">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#F59E0B] mb-1">Focus</h3>
+                <div className="w-8 h-0.5 bg-[#F59E0B] mb-5" />
+                <p className="text-[#94A3B8] leading-relaxed text-sm">
+                  We offer a range of services to speaker management companies, speakers bureaus and
+                  individual speakers. Throughout the years we have worked with Professional Sports MVPs,
+                  TV Celebrities and Corporate Icons as well as people who seemingly came from nowhere to
+                  earn six and seven-figure speaking careers. We&apos;ve built repeatable processes to
+                  handle the most demanding customers.
+                </p>
+              </div>
+              <div className="p-8 rounded-2xl bg-[#111827] border border-[rgba(245,158,11,0.08)]">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#F59E0B] mb-1">Offer</h3>
+                <div className="w-8 h-0.5 bg-[#F59E0B] mb-5" />
+                <p className="text-[#94A3B8] leading-relaxed text-sm">
+                  Our services include sales, marketing, video composing/presentation/editing,
+                  presentation-organization, platform skill adjustments, PowerPoint improvement,
+                  story-telling, comedy writing, and content development.
+                </p>
+              </div>
+            </div>
           </AnimatedSection>
 
           {services.length === 0 ? (

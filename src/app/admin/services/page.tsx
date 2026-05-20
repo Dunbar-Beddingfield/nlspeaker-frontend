@@ -9,7 +9,7 @@ import {
   getAdminServices, createService, updateService, deleteService,
   uploadImage, revalidateCache, CACHE_TAGS,
 } from "@/lib/api";
-import { compressImage } from "@/lib/utils";
+import { compressImage, cleanPayload } from "@/lib/utils";
 import type { Service } from "@/types";
 
 const inputCls = "w-full px-3 py-2 rounded-lg bg-[#0B1120] border border-[rgba(245,158,11,0.12)] text-[#F8FAFC] placeholder-[#475569] focus:outline-none focus:border-[#F59E0B] transition-colors text-sm";
@@ -70,7 +70,7 @@ export default function AdminServicesPage() {
     if (!token || !form.title?.trim() || !form.slug?.trim()) return;
     setSaving(true);
     try {
-      const payload = { ...form, outcomes: outcomesText.split("\n").map((s) => s.trim()).filter(Boolean) };
+      const payload = { ...cleanPayload(form), outcomes: outcomesText.split("\n").map((s) => s.trim()).filter(Boolean) };
       if (editing) {
         const r = await updateService(editing._id, payload, token);
         setItems((prev) => prev.map((x) => x._id === editing._id ? r.data : x));

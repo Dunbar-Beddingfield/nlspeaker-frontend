@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useAuth } from "@/hooks/useAuth";
 import { getAdminTopics, createTopic, updateTopic, deleteTopic, revalidateCache, CACHE_TAGS } from "@/lib/api";
+import { cleanPayload } from "@/lib/utils";
 import type { Topic } from "@/types";
 
 const inputCls = "w-full px-3 py-2 rounded-lg bg-[#0B1120] border border-[rgba(245,158,11,0.12)] text-[#F8FAFC] placeholder-[#475569] focus:outline-none focus:border-[#F59E0B] transition-colors text-sm";
@@ -34,7 +35,7 @@ export default function AdminTopicsPage() {
     setSaving(true);
     try {
       if (editing) {
-        const r = await updateTopic(editing._id, form, token);
+        const r = await updateTopic(editing._id, cleanPayload(form), token);
         setItems((prev) => prev.map((x) => x._id === editing._id ? r.data : x));
         toast.success("Topic updated");
       } else {

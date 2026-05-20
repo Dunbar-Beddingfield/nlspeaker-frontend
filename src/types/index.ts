@@ -19,6 +19,28 @@ export interface Service {
   updatedAt: string;
 }
 
+export interface Speaker {
+  _id: string;
+  slug: string;
+  name: string;
+  designation: string;
+  shortBio: string;
+  bio: string;
+  photo?: string;
+  portfolioImages: string[];
+  pastClients: string[];
+  socialLinks: {
+    linkedin?: string;
+    website?: string;
+    twitter?: string;
+    instagram?: string;
+  };
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Topic {
   _id: string;
   slug: string;

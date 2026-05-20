@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Download, ExternalLink, Image as ImageIcon, FileText, Play } from "lucide-react";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import { getMedia } from "@/lib/api";
+import { getMedia, getSiteSettings } from "@/lib/api";
 import type { MediaItem, MediaType } from "@/types";
 
 export const metadata: Metadata = {
@@ -21,7 +21,10 @@ const TYPE_META: Record<MediaType, { label: string; Icon: React.ElementType }> =
 const SECTION_ORDER: MediaType[] = ["photo", "video-clip", "logo", "press-logo", "document"];
 
 export default async function MediaPage() {
-  const items = await getMedia().catch(() => []);
+  const [items, settings] = await Promise.all([
+    getMedia().catch(() => []),
+    getSiteSettings().catch(() => ({} as Record<string, string>)),
+  ]);
 
   type GroupedMedia = { [key: string]: MediaItem[] };
   const grouped: GroupedMedia = {};
@@ -113,6 +116,64 @@ export default async function MediaPage() {
               })}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Marketing — Brian Carter Group */}
+      <section className="py-24 bg-[#111827]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#F59E0B] text-center mb-14">
+              Marketing
+            </p>
+            <div className="flex flex-col md:flex-row gap-12 items-center">
+              {/* Text */}
+              <div className="flex-1">
+                <h2 className="font-serif-display text-3xl font-bold text-[#F8FAFC] mb-6">
+                  Brian Carter Group
+                </h2>
+                <div className="space-y-4 text-[#94A3B8] leading-relaxed">
+                  <p>
+                    Next Level Speaking Services, partnering with Brian Carter Group (BCG), now offers
+                    digital, traditional and advertising marketing to boost speakers&apos; online results
+                    and offline profits.
+                  </p>
+                  <p>
+                    BCG marketing audits, consulting, ad management, and other speaker marketing services
+                    are based on cutting-edge, real-world best practices. The strategies and tactics we
+                    recommend aren&apos;t just neat, shiny ideas that sound good — they&apos;ve been
+                    tested and proven for keynote speakers like you.
+                  </p>
+                  <p>
+                    Digital marketing thought leader Brian Carter leads BCG. As a key player in digital
+                    marketing and social media for two decades, Brian Carter combines his keynote speaking
+                    industry knowledge, success marketing himself and other keynote speakers, his network
+                    of influencers and agency leaders and his experience getting results for hundreds of
+                    clients to lead a team that can solve your unique problems and take your results to
+                    the next level.
+                  </p>
+                </div>
+              </div>
+
+              {/* Photo */}
+              <div className="w-full md:w-64 shrink-0">
+                <div className="rounded-2xl overflow-hidden aspect-[3/4] bg-[#0B1120] border border-[rgba(245,158,11,0.1)]">
+                  {settings["brianCarterPhoto"] ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={settings["brianCarterPhoto"]}
+                      alt="Brian Carter"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-6xl font-bold text-[rgba(245,158,11,0.2)]">BC</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
     </div>

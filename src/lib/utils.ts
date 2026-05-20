@@ -21,6 +21,18 @@ export function formatDateShort(dateStr: string): string {
   });
 }
 
+// ── API payload helpers ───────────────────────────────────────────────────────
+
+/** Strips Mongoose-internal fields before sending an update payload to the API. */
+export function cleanPayload<T extends object>(obj: T): Omit<T, "_id" | "createdAt" | "updatedAt"> {
+  const copy = { ...obj } as Record<string, unknown>;
+  delete copy._id;
+  delete copy.createdAt;
+  delete copy.updatedAt;
+  delete copy.__v;
+  return copy as Omit<T, "_id" | "createdAt" | "updatedAt">;
+}
+
 // ── Image utilities (client-side only) ────────────────────────────────────────
 
 const MAX_IMAGE_WIDTH = 1200;

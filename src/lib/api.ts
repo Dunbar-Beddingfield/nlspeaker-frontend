@@ -1,6 +1,7 @@
 import { API_URL } from "./constants";
 import type {
   ApiResponse,
+  Speaker,
   Service,
   Topic,
   SpeakingEvent,
@@ -42,6 +43,7 @@ async function apiFetch<T>(
 // ── Cache helpers ─────────────────────────────────────────────────────────────
 
 export const CACHE_TAGS = {
+  speakers: "speakers",
   services: "services",
   topics: "topics",
   events: "events",
@@ -60,6 +62,16 @@ function publicCache(...tags: string[]): RequestInit {
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
+
+export async function getSpeakers(): Promise<Speaker[]> {
+  const res = await apiFetch<Speaker[]>("/speakers", publicCache(CACHE_TAGS.speakers));
+  return res.data;
+}
+
+export async function getSpeakerBySlug(slug: string): Promise<Speaker> {
+  const res = await apiFetch<Speaker>(`/speakers/${slug}`, publicCache(CACHE_TAGS.speakers));
+  return res.data;
+}
 
 export async function getSiteSettings(): Promise<SiteSettings> {
   const res = await apiFetch<SiteSettings>("/site-settings", publicCache(CACHE_TAGS.siteSettings));
@@ -142,6 +154,20 @@ export async function adminLogin(email: string, password: string) {
     "/auth/login",
     { method: "POST", body: JSON.stringify({ email, password }) },
   );
+}
+
+// Speakers
+export async function getAdminSpeakers(token: string) {
+  return apiFetch<Speaker[]>("/speakers/admin/all", { headers: authHeaders(token), cache: "no-store" });
+}
+export async function createSpeaker(data: unknown, token: string) {
+  return apiFetch<Speaker>("/speakers", { method: "POST", body: JSON.stringify(data), headers: authHeaders(token) });
+}
+export async function updateSpeaker(id: string, data: unknown, token: string) {
+  return apiFetch<Speaker>(`/speakers/${id}`, { method: "PATCH", body: JSON.stringify(data), headers: authHeaders(token) });
+}
+export async function deleteSpeaker(id: string, token: string) {
+  return apiFetch<{ deleted: boolean }>(`/speakers/${id}`, { method: "DELETE", headers: authHeaders(token) });
 }
 
 // Services

@@ -122,8 +122,59 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* Meet the Founder */}
+      <section className="py-24 bg-[#111827]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#F59E0B] text-center mb-14">
+              About Us
+            </p>
+            <div className="flex flex-col md:flex-row gap-12 items-center">
+              {/* Photo */}
+              <div className="w-full md:w-80 shrink-0">
+                <div className="rounded-2xl overflow-hidden aspect-[4/5] bg-[#0B1120] border border-[rgba(245,158,11,0.1)]">
+                  {settings["founderPhoto"] ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={settings["founderPhoto"]}
+                      alt="Jeff Thacker"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-6xl font-bold text-[rgba(245,158,11,0.2)]">JT</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Bio */}
+              <div className="flex-1">
+                <h2 className="font-serif-display text-3xl font-bold text-[#F8FAFC] mb-5">
+                  Jeff Thacker
+                </h2>
+                <div className="space-y-4 text-[#94A3B8] leading-relaxed">
+                  <p>
+                    With over 27 years of experience working with nationally recognized speakers, Jeff has
+                    a proven record of helping people grow their businesses while on the go.
+                  </p>
+                  <p>
+                    He acknowledges while they are excellent at what they do, they need help getting
+                    everything done and maintaining the hectic schedule associated with this industry.
+                  </p>
+                  <p>
+                    Jeff has created repeatable processes to dramatically increase sales, develop highly
+                    effective marketing tools, and build rock-solid relationships with bureaus and clients.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="py-24 bg-[#111827] text-center">
+      <section className="py-24 bg-[#0B1120] text-center">
         <AnimatedSection>
           <h2 className="font-serif-display text-3xl md:text-4xl font-bold text-[#F8FAFC] mb-4">
             Ready to Take the Stage?
